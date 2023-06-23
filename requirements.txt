@@ -1,0 +1,6 @@
+flask
+azure-storage-blob
+azure-identity
+pyodbc
+redis
+json
