@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Form</title>
+</head>
+<body>
+    <h1>Query Form</h1>
+    <form action="/query" method="post">
+        <label for="query_type">Query Type:</label>
+        <select name="query_type" id="query_type">
+            <option value="random">Random</option>
+            <option value="restricted">Restricted</option>
+        </select>
+        <br><br>
+        <label for="num_queries">Number of Queries:</label>
+        <input type="number" name="num_queries" id="num_queries" min="1" max="1000" required>
+        <br><br>
+        <div id="restriction_fields" style="display: none;">
+            <label for="restriction_type">Restriction Type:</label>
+            <select name="restriction_type" id="restriction_type">
+                <option value="time">Time</option>
+                <option value="magnitude">Magnitude</option>
+            </select>
+            <br><br>
+            <div id="time_fields" style="display: none;">
+                <label for="start_time">Start Time:</label>
+                <input type="datetime-local" name="start_time" id="start_time">
+                <br><br>
+                <label for="end_time">End Time:</label>
+                <input type="datetime-local" name="end_time" id="end_time">
+                <br><br>
+            </div>
+            <div id="magnitude_fields" style="display: none;">
+                <label for="min_magnitude">Minimum Magnitude:</label>
+                <input type="number" name="min_magnitude" id="min_magnitude" step="0.1">
+                <br><br>
+                <label for="max_magnitude">Maximum Magnitude:</label>
+                <input type="number" name="max_magnitude" id="max_magnitude" step="0.1">
+                <br><br>
+            </div>
+        </div>
+        <input type="submit" value="Execute Query">
+    </form>
+
+    <script>
+        // Show/hide the corresponding restriction fields based on the selected restriction type
+        var restrictionTypeSelect = document.getElementById('restriction_type');
+        var timeFields = document.getElementById('time_fields');
+        var magnitudeFields = document.getElementById('magnitude_fields');
+
+        restrictionTypeSelect.addEventListener('change', function() {
+            if (this.value === 'time') {
+                timeFields.style.display = 'block';
+                magnitudeFields.style.display = 'none';
+            } else if (this.value === 'magnitude') {
+                timeFields.style.display = 'none';
+                magnitudeFields.style.display = 'block';
+            } else {
+                timeFields.style.display = 'none';
+                magnitudeFields.style.display = 'none';
+            }
+        });
+
+        // Show/hide the restriction fields when the page loads
+        var queryTypeSelect = document.getElementById('query_type');
+        var restrictionFields = document.getElementById('restriction_fields');
+
+        queryTypeSelect.addEventListener('change', function() {
+            if (this.value === 'restricted') {
+                restrictionFields.style.display = 'block';
+            } else {
+                restrictionFields.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
